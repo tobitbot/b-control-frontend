@@ -1,26 +1,20 @@
-import { ObserversModule } from '@angular/cdk/observers';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FormArray } from '@angular/forms';
-import { Observable, retry } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private baseUrl = "http://localhost:3000"
+  private baseUrl = "http://192.168.178.201/api/";
 
   constructor(private httpClient: HttpClient) { }
 
   public getStatus(): Observable<any> {
-    return this.httpClient.get(this.baseUrl + "/" + "overallstatus");
+    return this.httpClient.get(this.baseUrl + "status");
   }
 
   public get(route: string): Observable<any> {
-    return this.httpClient.get(this.baseUrl + "/" + route)
-  }
-
-  public post(route: string, data: any | undefined): Observable<any> {
-    return this.httpClient.post(this.baseUrl + "/" + route, data);
+    return this.httpClient.get(this.baseUrl + route);
   }
 }

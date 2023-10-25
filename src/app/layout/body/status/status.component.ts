@@ -2,7 +2,8 @@ import { Component, OnInit, resolveForwardRef } from '@angular/core';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ApiService } from 'src/app/service/api.service';
 import { FormArray, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { IStatus, IPropery, State } from 'src/app/service/interfaces/status';
+import { IStatus, State } from 'src/app/service/interfaces/status';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-status',
@@ -19,8 +20,8 @@ import { IStatus, IPropery, State } from 'src/app/service/interfaces/status';
 
 export class StatusComponent implements OnInit {
 
-  statusForm: UntypedFormArray = new UntypedFormArray([]);
-  statusFormData: IStatus = [];
+  //statusForm: UntypedFormArray = new UntypedFormArray([]);
+  statusForm: UntypedFormGroup = new UntypedFormGroup({});
 
   public displayedColumns: string[] = ['description', 'value', 'refresh'];
 
@@ -32,53 +33,52 @@ export class StatusComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._apiService.getStatus().subscribe((status: IStatus) => {
-      this.statusFormData = status;
-      this.statusForm = this.createForm(status);
+    this._apiService.getStatus().subscribe((response: IStatus) => {
+      console.log(response);
+      this.statusForm = this.createFormGroup(response);
+      console.log(this.statusForm);
     })
   }
 
-  createFormGroup(status: IPropery) {
+
+  createFormGroup(data: IStatus) {
     const group = this._fb.group({
-      description: status.description,
-      value: status.value,
-      param: status.param
+      power: State[data.power],
+      autosource: State[data.autosource],
+      source: data.source,
+      blank: State[data.blank],
+      volume: data.volume,
+      lamphours: data.lamphours,
+      maxlamphours: data.maxlamphours
     })
 
     return group;
   }
 
-  createForm(status: IStatus): UntypedFormArray {
-    return this._fb.array(status.map((item) => this.createFormGroup(item)))
-  }
-
-  /**
-   * Merges the given new data into the original data
-   *
-   * @param originalData
-   * @param newData
-   */
-  mergeData(originalData: IPropery, newData: IPropery) {
-    let index: number = this.statusFormData.findIndex((item) => item.description == newData.description)
-    if (index > 0 && index <= this.statusForm.length) {
-      this.statusForm.at(index).patchValue(newData);
-    }
-  }
-
-  refresh(data: IPropery) {
-    this._apiService.get("idk").subscribe((response: IPropery) => {
-      this.mergeData(data, response);
+  refresh(route: string) {
+    this._apiService.get('status/' + route).subscribe((response: any) => {
+      console.log(response);
+      this.statusForm.reset();
+      this.statusForm = this.createFormGroup(response);
+      console.log(this.statusForm);
     });
   }
 
   refreshAll() {
-    this._apiService.getStatus().subscribe((response: IPropery) => {
-      this.statusForm.setValue([response])
+    this._apiService.getStatus().subscribe((response: any) => {
+      this.statusForm.reset();
+      this.statusForm = this.createFormGroup(response);
     });
   }
 
-  //sendCommand() {
-  //  this._apiService.post("commands/power/on", )
-  //}
+  sendToggleCommand(route: string, event: MatSlideToggleChange) {
+    let action: string = event.checked ? "on" : "off"
+    this.sendCommand(route + "/" + action);
+  }
 
+  sendCommand(route: string) {
+    this._apiService.get(route).subscribe((response: any) => {
+      console.log("response" + response);
+    })
+  }
 }

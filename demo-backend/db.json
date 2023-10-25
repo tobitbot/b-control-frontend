@@ -1,19 +1,14 @@
 {
-    "overallstatus":
-    [
-      { "description": "Status", "value": "State.OFF", "param": "status" },
-      { "description": "Power", "value": "State.OFF", "param": "power" },
-      { "description": "Autosource", "value": "State.OFF", "param": "autosource" },
-      { "description": "Source", "value": "HDMI 1", "param": "source" },
-      { "description": "Blank", "value": "State.OFF", "param": "blank" },
-      { "description": "Lamphours", "value": 1234, "param": "lamphours" }
-    ],
-    "status": { "description": "Status", "value": "State.ON", "param": "status"},
-    "power": { "description": "Power", "value": "State.OFF", "param": "power" },
-    "autosource":  { "description": "Autosource", "value": "State.OFF", "param": "autosource" },
-    "source":  { "description": "Source", "value": "HDMI 1", "param": "source" },
-    "blank":  { "description": "Blank", "value": "State.OFF", "param": "blank" },
-    "lamphours":  { "description": "Lamphours", "value": 4567, "param": "lamphours" },
+    "status":
+    {
+      "power": 0,
+      "autosource":  0,
+      "source":  "HDMI 1",
+      "blank":  1,
+      "volume": 5,
+      "lamphours":  1234,
+      "maxlamphours": 5000
+    },
     "commands":
     {
       "power": {
@@ -30,6 +25,11 @@
       },
       "source": {
         "src1": { "result": "ok" }
+      },
+      "volume": {
+        "mute": { "result": "ok" },
+        "up": { "result": "ok"},
+        "down": { "result": "ok"}
       }
     }
 }

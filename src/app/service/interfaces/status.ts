@@ -1,12 +1,14 @@
 export enum State {
-    OFF = "off",
-    ON = "on"
+    OFF,
+    ON
 }
 
-export interface IPropery {
-    description: string,
-    value: number | string | State,
-    param: string
+export interface IStatus {
+    power: State;
+    autosource: State;
+    source: string;
+    blank: State;
+    volume: number;
+    lamphours: number;
+    maxlamphours: number
 }
-
-export interface IStatus extends Array<IPropery> { }

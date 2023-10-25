@@ -2,33 +2,122 @@
     <mat-card-title class="title">Beamer status</mat-card-title>
 
     <mat-card-content class="card-content">
-        <mat-table [dataSource]="statusForm.value" class="content">
 
-            <ng-container matColumnDef="description">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell class="label" *matCellDef="let element"> {{element.description}} </td>
-            </ng-container>
+        <!-- Header -->
+        <mat-grid-list class="grid-header" cols="4" rowHeight="4:1">
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile>Status</mat-grid-tile>
+            <mat-grid-tile>
+                Refresh
+                <button mat-icon-button (click)="refreshAll()">
+                    <mat-icon>refresh</mat-icon>
+                </button>
+            </mat-grid-tile>
+            <mat-grid-tile>Action</mat-grid-tile>
+        </mat-grid-list>
 
-            <ng-container matColumnDef="value">
-                <th mat-header-cell *matHeaderCellDef> Reload </th>
-                <td mat-cell *matCellDef="let element"> {{element.value}} </td>
-            </ng-container>
+        <!-- Power status -->
+        <mat-grid-list class="grid-title" cols="4" rowHeight="4:1">
+            <mat-grid-tile class="label">Power</mat-grid-tile>
+            <mat-grid-tile>{{statusForm.get("power")?.getRawValue()}}</mat-grid-tile>
+            <mat-grid-tile>
+                <button mat-icon-button (click)="refresh('power')">
+                    <mat-icon>refresh</mat-icon>
+                </button>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-slide-toggle (change)="sendToggleCommand('power', $event)">
+                </mat-slide-toggle>
+            </mat-grid-tile>
+        </mat-grid-list>
 
-            <ng-container matColumnDef="refresh">
-                <th mat-header-cell *matHeaderCellDef>
-                    <button mat-icon-button (click)="refreshAll()">
-                        <mat-icon>refresh</mat-icon>
-                    </button>
-                </th>
-                <td mat-cell *matCellDef="let element">
-                    <button mat-icon-button (click)="refresh(element)">
-                        <mat-icon>refresh</mat-icon>
-                    </button>
-                </td>
-            </ng-container>
+        <!-- Source -->
+        <mat-grid-list cols="4" rowHeight="4:1">
+            <mat-grid-tile>Source</mat-grid-tile>
+            <mat-grid-tile>{{statusForm.get("source")?.getRawValue()}}</mat-grid-tile>
+            <mat-grid-tile>
+                <button mat-icon-button (click)="refresh('source')">
+                    <mat-icon>refresh</mat-icon>
+                </button>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <button mat-icon-button (click)="sendCommand('source/prev')"><mat-icon>chevron_left</mat-icon></button>
+                <button mat-icon-button (click)="sendCommand('source/next')"><mat-icon>chevron_right</mat-icon></button>
+            </mat-grid-tile>
+        </mat-grid-list>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </mat-table>
+        <!-- Autosource -->
+        <mat-grid-list cols="4" rowHeight="4:1">
+            <mat-grid-tile>Autosource</mat-grid-tile>
+            <mat-grid-tile>{{statusForm.get("autosource")?.getRawValue()}}</mat-grid-tile>
+            <mat-grid-tile>
+                <button mat-icon-button (click)="refresh('autosource')">
+                    <mat-icon>refresh</mat-icon>
+                </button>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-slide-toggle (change)="sendToggleCommand('autosource', $event)">
+                </mat-slide-toggle>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <!-- Blank -->
+        <mat-grid-list cols="4" rowHeight="4:1">
+            <mat-grid-tile>Blank</mat-grid-tile>
+            <mat-grid-tile>{{statusForm.get("blank")?.getRawValue()}}</mat-grid-tile>
+            <mat-grid-tile>
+                <button mat-icon-button (click)="refresh('blank')">
+                    <mat-icon>refresh</mat-icon>
+                </button>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-slide-toggle (change)="sendToggleCommand('blank', $event)">
+                </mat-slide-toggle>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <!-- Volume -->
+        <mat-grid-list cols="4" rowHeight="4:1">
+            <mat-grid-tile>Volume</mat-grid-tile>
+            <mat-grid-tile>{{statusForm.get("volume")?.getRawValue()}}</mat-grid-tile>
+            <mat-grid-tile>
+                <button mat-icon-button (click)="refresh('volume')">
+                    <mat-icon>refresh</mat-icon>
+                </button>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <button mat-icon-button (click)="sendCommand('volume/down')"><mat-icon>volume_down</mat-icon></button>
+                <button mat-icon-button (click)="sendCommand('volume/mute')"><mat-icon>volume_off</mat-icon></button>
+                <button mat-icon-button (click)="sendCommand('volume/up')"><mat-icon>volume_up</mat-icon></button>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <!-- Lamphours -->
+        <mat-grid-list cols="4" rowHeight="4:1">
+            <mat-grid-tile>Lamphours</mat-grid-tile>
+            <mat-grid-tile>{{statusForm.get("lamphours")?.getRawValue()}}</mat-grid-tile>
+            <mat-grid-tile>
+                <button mat-icon-button (click)="refresh('lamphours')">
+                    <mat-icon>refresh</mat-icon>
+                </button>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <!--empty-->
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <!-- Maximum lamphours -->
+        <mat-grid-list cols="4" rowHeight="4:1">
+            <mat-grid-tile>Max lamphours</mat-grid-tile>
+            <mat-grid-tile>{{statusForm.get("maxlamphours")?.getRawValue()}}</mat-grid-tile>
+            <mat-grid-tile>
+                <!-- empty -->
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <!-- empty -->
+            </mat-grid-tile>
+        </mat-grid-list>
+
+
     </mat-card-content>
 </mat-card>

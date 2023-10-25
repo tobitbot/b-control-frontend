@@ -3,13 +3,14 @@
     text-align: right;
 
     .card-content {
-        background-color: grey;
-        text-align: right;
-        align-self: center;
+        background-color: rgb(110, 108, 108);
 
-        .content {
+        .grid-header {
             background-color: rgb(158, 158, 158);
+            font-weight: 500;
+        }
 
+        .grid-title {
             .label {
                 font-weight: 500;
             }
