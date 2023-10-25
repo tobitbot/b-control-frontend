@@ -9,6 +9,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { StatusComponent } from './layout/body/status/status.component';
 import { ControlComponent } from './layout/body/control/control.component';
+import { ApiService } from './service/api.service';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +25,9 @@ import { ControlComponent } from './layout/body/control/control.component';
     MatSidenavModule,
     StatusComponent,
     ControlComponent
+  ],
+  providers: [
+    ApiService
   ]
 })
 
