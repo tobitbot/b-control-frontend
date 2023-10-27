@@ -77,7 +77,7 @@ export class StatusComponent implements OnInit {
   }
 
   sendCommand(route: string) {
-    this._apiService.get(route).subscribe((response: any) => {
+    this._apiService.get("commands/" + route).subscribe((response: any) => {
       console.log("response" + response);
     })
   }
