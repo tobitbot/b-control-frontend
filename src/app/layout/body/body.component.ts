@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { StatusComponent } from './status/status.component';
-import { ControlComponent } from './control/control.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 
@@ -11,7 +10,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
   standalone: true,
   imports: [
     StatusComponent,
-    ControlComponent,
     SharedModule
   ]
 })

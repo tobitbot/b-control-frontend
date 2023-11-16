@@ -1,130 +1,106 @@
-<mat-card class="card-wrapper">
-    <mat-card-title class="title">Beamer status</mat-card-title>
+<form [formGroup]="statusForm">
+    <mat-card class="card-wrapper">
+        <mat-card-content class="card-content">
+            <!-- Header -->
+            <mat-grid-list class="grid-header" cols="3" rowHeight="5:1">
+                <mat-grid-tile></mat-grid-tile>
+                <mat-grid-tile>Status</mat-grid-tile>
+                <mat-grid-tile>Action</mat-grid-tile>
+            </mat-grid-list>
 
-    <mat-card-content class="card-content">
+            <!-- Power status -->
+            <mat-grid-list class="grid-title" cols="3" rowHeight="5:1">
+                <mat-grid-tile class="label">Power</mat-grid-tile>
+                <mat-grid-tile>{{statusForm.get("power")?.getRawValue()}}</mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-slide-toggle (change)="sendToggleCommand('power', $event)"
+                        [checked]="this.statusForm.get('power')?.getRawValue() == '1' ? true : false">
+                    </mat-slide-toggle>
+                </mat-grid-tile>
+            </mat-grid-list>
 
-        <!-- Header -->
-        <mat-grid-list class="grid-header" cols="4" rowHeight="4:1">
-            <mat-grid-tile></mat-grid-tile>
-            <mat-grid-tile>Status</mat-grid-tile>
-            <mat-grid-tile>
-                Refresh
-                <button mat-icon-button matTooltip="Refresh" (click)="refreshAll()">
+            <!-- Source -->
+            <mat-grid-list cols="3" rowHeight="5:1">
+                <mat-grid-tile>Source</mat-grid-tile>
+                <mat-grid-tile>{{statusForm.get("source")?.getRawValue()}}</mat-grid-tile>
+                <mat-grid-tile>
+                    <button mat-icon-button (click)="sendCommand('source', '/prev')"
+                        matTooltip="Previous source"><mat-icon>chevron_left</mat-icon></button>
+                    <button mat-icon-button (click)="sendCommand('source', '/next')"
+                        matTooltip="Next source"><mat-icon>chevron_right</mat-icon></button>
+                    <button mat-icon-button (click)="sendCommand('source', '/hdmi')" matTooltip="HDMI"><mat-icon><span
+                                class="material-symbols-outlined">
+                                settings_input_hdmi
+                            </span></mat-icon></button>
+                    <!-- ADD HDMI BUTTON somehow -->
+                </mat-grid-tile>
+            </mat-grid-list>
+
+            <!-- Autosource -->
+            <mat-grid-list cols="3" rowHeight="5:1">
+                <mat-grid-tile>Autosource</mat-grid-tile>
+                <mat-grid-tile>{{statusForm.get("autosource")?.getRawValue()}}</mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-slide-toggle (change)="sendToggleCommand('autosource', $event)"
+                        [checked]="this.statusForm.get('autosource')?.getRawValue() == '1' ? true : false">
+                    </mat-slide-toggle>
+                </mat-grid-tile>
+            </mat-grid-list>
+
+            <!-- Blank -->
+            <mat-grid-list cols="3" rowHeight="5:1">
+                <mat-grid-tile>Blank</mat-grid-tile>
+                <mat-grid-tile>{{statusForm.get("blank")?.getRawValue()}}</mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-slide-toggle (change)="sendToggleCommand('blank', $event)"
+                        [checked]="this.statusForm.get('blank')?.getRawValue() == '1' ? true : false">
+                    </mat-slide-toggle>
+                </mat-grid-tile>
+            </mat-grid-list>
+
+            <!-- Volume -->
+            <mat-grid-list cols="3" rowHeight="5:1">
+                <mat-grid-tile>Volume</mat-grid-tile>
+                <mat-grid-tile>{{statusForm.get("volume")?.getRawValue()}}</mat-grid-tile>
+                <mat-grid-tile>
+                    <button mat-icon-button
+                        (click)="sendCommand('volume', '/down')"><mat-icon>volume_down</mat-icon></button>
+                    <button mat-icon-button
+                        (click)="sendCommand('volume', '/mute')"><mat-icon>volume_off</mat-icon></button>
+                    <button mat-icon-button
+                        (click)="sendCommand('volume', '/up')"><mat-icon>volume_up</mat-icon></button>
+                </mat-grid-tile>
+            </mat-grid-list>
+
+            <!-- Lamphours -->
+            <mat-grid-list cols="3" rowHeight="5:1">
+                <mat-grid-tile>Lamphours</mat-grid-tile>
+                <mat-grid-tile>{{statusForm.get("lamphours")?.getRawValue()}}</mat-grid-tile>
+                <mat-grid-tile>
+                    <!--empty-->
+                </mat-grid-tile>
+            </mat-grid-list>
+
+            <!-- Maximum lamphours -->
+            <mat-grid-list cols="3" rowHeight="5:1">
+                <mat-grid-tile>Max lamphours</mat-grid-tile>
+                <mat-grid-tile>{{statusForm.get("maxlamphours")?.getRawValue()}}</mat-grid-tile>
+                <mat-grid-tile>
+                    <!-- empty -->
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <!-- empty -->
+                </mat-grid-tile>
+            </mat-grid-list>
+
+            <mat-card-title class="title">
+                <button mat-raised-button matTooltip="Refresh" (click)="refreshAll()">
                     <mat-icon>refresh</mat-icon>
+                    Beamer Status
                 </button>
-            </mat-grid-tile>
-            <mat-grid-tile>Action</mat-grid-tile>
-        </mat-grid-list>
-
-        <!-- Power status -->
-        <mat-grid-list class="grid-title" cols="4" rowHeight="4:1">
-            <mat-grid-tile class="label">Power</mat-grid-tile>
-            <mat-grid-tile>{{statusForm.get("power")?.getRawValue()}}</mat-grid-tile>
-            <mat-grid-tile>
-                <button mat-icon-button matTooltip="Refresh" (click)="refresh('power')">
-                    <mat-icon>refresh</mat-icon>
-                </button>
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <mat-slide-toggle (change)="sendToggleCommand('power', $event)">
-                </mat-slide-toggle>
-            </mat-grid-tile>
-        </mat-grid-list>
-
-        <!-- Source -->
-        <mat-grid-list cols="4" rowHeight="4:1">
-            <mat-grid-tile>Source</mat-grid-tile>
-            <mat-grid-tile>{{statusForm.get("source")?.getRawValue()}}</mat-grid-tile>
-            <mat-grid-tile>
-                <button mat-icon-button matTooltip="Refresh" (click)="refresh('source')">
-                    <mat-icon>refresh</mat-icon>
-                </button>
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <button mat-icon-button (click)="sendCommand('source/prev')"
-                    matTooltip="Previous source"><mat-icon>chevron_left</mat-icon></button>
-                <button mat-icon-button (click)="sendCommand('source/next')"
-                    matTooltip="Next source"><mat-icon>chevron_right</mat-icon></button>
-                <button mat-icon-button (click)="sendCommand('source/hdmi')" matTooltip="HDMI"><mat-icon><span
-                            class="material-symbols-outlined">
-                            settings_input_hdmi
-                        </span></mat-icon></button>
-                <!-- ADD HDMI BUTTON somehow -->
-            </mat-grid-tile>
-        </mat-grid-list>
-
-        <!-- Autosource -->
-        <mat-grid-list cols="4" rowHeight="4:1">
-            <mat-grid-tile>Autosource</mat-grid-tile>
-            <mat-grid-tile>{{statusForm.get("autosource")?.getRawValue()}}</mat-grid-tile>
-            <mat-grid-tile>
-                <button mat-icon-button matTooltip="Refresh" (click)="refresh('autosource')">
-                    <mat-icon>refresh</mat-icon>
-                </button>
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <mat-slide-toggle (change)="sendToggleCommand('autosource', $event)">
-                </mat-slide-toggle>
-            </mat-grid-tile>
-        </mat-grid-list>
-
-        <!-- Blank -->
-        <mat-grid-list cols="4" rowHeight="4:1">
-            <mat-grid-tile>Blank</mat-grid-tile>
-            <mat-grid-tile>{{statusForm.get("blank")?.getRawValue()}}</mat-grid-tile>
-            <mat-grid-tile>
-                <button mat-icon-button matTooltip="Refresh" (click)="refresh('blank')">
-                    <mat-icon>refresh</mat-icon>
-                </button>
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <mat-slide-toggle (change)="sendToggleCommand('blank', $event)">
-                </mat-slide-toggle>
-            </mat-grid-tile>
-        </mat-grid-list>
-
-        <!-- Volume -->
-        <mat-grid-list cols="4" rowHeight="4:1">
-            <mat-grid-tile>Volume</mat-grid-tile>
-            <mat-grid-tile>{{statusForm.get("volume")?.getRawValue()}}</mat-grid-tile>
-            <mat-grid-tile>
-                <button mat-icon-button matTooltip="Refresh" (click)="refresh('volume')">
-                    <mat-icon>refresh</mat-icon>
-                </button>
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <button mat-icon-button (click)="sendCommand('volume/down')"><mat-icon>volume_down</mat-icon></button>
-                <button mat-icon-button (click)="sendCommand('volume/mute')"><mat-icon>volume_off</mat-icon></button>
-                <button mat-icon-button (click)="sendCommand('volume/up')"><mat-icon>volume_up</mat-icon></button>
-            </mat-grid-tile>
-        </mat-grid-list>
-
-        <!-- Lamphours -->
-        <mat-grid-list cols="4" rowHeight="4:1">
-            <mat-grid-tile>Lamphours</mat-grid-tile>
-            <mat-grid-tile>{{statusForm.get("lamphours")?.getRawValue()}}</mat-grid-tile>
-            <mat-grid-tile>
-                <button mat-icon-button matTooltip="Refresh" (click)="refresh('lamphours')">
-                    <mat-icon>refresh</mat-icon>
-                </button>
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <!--empty-->
-            </mat-grid-tile>
-        </mat-grid-list>
-
-        <!-- Maximum lamphours -->
-        <mat-grid-list cols="4" rowHeight="4:1">
-            <mat-grid-tile>Max lamphours</mat-grid-tile>
-            <mat-grid-tile>{{statusForm.get("maxlamphours")?.getRawValue()}}</mat-grid-tile>
-            <mat-grid-tile>
-                <!-- empty -->
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <!-- empty -->
-            </mat-grid-tile>
-        </mat-grid-list>
+            </mat-card-title>
 
 
-    </mat-card-content>
-</mat-card>
+        </mat-card-content>
+    </mat-card>
+</form>

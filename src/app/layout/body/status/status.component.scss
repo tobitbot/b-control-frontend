@@ -1,13 +1,24 @@
+mat-card {
+    width: 100%;
+    align-self: center;
+}
+
 .card-wrapper {
-    background-color: grey;
+    background-color: rgb(32, 32, 32);
     text-align: right;
+    border-radius: 2%;
+    border-color: orange;
+    border-width: 1px;
+    padding: 16px;
+    margin-bottom: 16px;
 
     .card-content {
-        background-color: rgb(110, 108, 108);
+        color: orange;
 
         .grid-header {
-            background-color: rgb(158, 158, 158);
             font-weight: 500;
+            font-size: large;
+            color: orange
         }
 
         .grid-title {
@@ -20,6 +31,6 @@
     .title {
         padding-top: 10px;
         text-align: center;
-        color: rgb(60, 255, 86);
+        color: orange;
     }
 }

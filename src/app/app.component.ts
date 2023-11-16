@@ -5,10 +5,8 @@ import { HeaderComponent } from './layout/header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CommonModule } from '@angular/common';
 import { MatSidenavModule } from '@angular/material/sidenav';
-//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { StatusComponent } from './layout/body/status/status.component';
-import { ControlComponent } from './layout/body/control/control.component';
 import { ApiService } from './service/api.service';
 
 @Component({
@@ -23,8 +21,7 @@ import { ApiService } from './service/api.service';
     BodyComponent,
     HeaderComponent,
     MatSidenavModule,
-    StatusComponent,
-    ControlComponent
+    StatusComponent
   ],
   providers: [
     ApiService

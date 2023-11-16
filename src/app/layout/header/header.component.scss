@@ -4,5 +4,13 @@
   overflow: hidden;
   padding-left: 12px;
   z-index: 1;
-  background-color: blue;
+  background-color: rgb(46, 38, 120);
+  margin-bottom: 2vh;
+
+  .title {
+    color: rgb(151, 149, 149);
+    margin: auto;
+    font-weight: 800;
+    font-size: xx-large;
+  }
 }

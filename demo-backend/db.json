@@ -2,7 +2,7 @@
     "status":
     {
       "power": 0,
-      "autosource":  0,
+      "autosource":  1,
       "source":  "HDMI 1",
       "blank":  1,
       "volume": 5,
@@ -12,24 +12,24 @@
     "commands":
     {
       "power": {
-        "on": { "result": "ok" },
-        "off": { "result": "ok" }
+        "on": { "result": "ok", "value": 1 },
+        "off": { "result": "ok", "value": 0 }
       },
       "blank": {
-        "on": { "result": "ok" },
-        "off": { "result": "ok" }
+        "on": { "result": "ok", "value": 1  },
+        "off": { "result": "ok", "value": 0 }
       },
       "autosource": {
-        "on": { "result": "ok" },
-        "off": { "result": "ok" }
+        "on": { "result": "ok", "value": 1 },
+        "off": { "result": "ok", "value": 0  }
       },
       "source": {
-        "src1": { "result": "ok" }
+        "src1": { "result": "ok", "value": 14 }
       },
       "volume": {
-        "mute": { "result": "ok" },
-        "up": { "result": "ok"},
-        "down": { "result": "ok"}
+        "mute": { "result": "ok", "value": 1  },
+        "up": { "result": "ok", "value": 5 },
+        "down": { "result": "ok", "value": 3}
       }
     }
 }

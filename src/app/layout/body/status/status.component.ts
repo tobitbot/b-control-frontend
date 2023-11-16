@@ -1,8 +1,8 @@
-import { Component, OnInit, resolveForwardRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ApiService } from 'src/app/service/api.service';
-import { FormArray, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { IStatus, State } from 'src/app/service/interfaces/status';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { ISingleStatus, IStatus } from 'src/app/shared/interfaces/status';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
@@ -16,8 +16,6 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 })
 
 
-
-
 export class StatusComponent implements OnInit {
 
   //statusForm: UntypedFormArray = new UntypedFormArray([]);
@@ -28,25 +26,24 @@ export class StatusComponent implements OnInit {
   constructor(
     private _fb: UntypedFormBuilder,
     private _apiService: ApiService
-  ) {
-
-  }
+  ) { }
 
   ngOnInit(): void {
     this._apiService.getStatus().subscribe((response: IStatus) => {
-      console.log(response);
       this.statusForm = this.createFormGroup(response);
-      console.log(this.statusForm);
     })
   }
 
-
+  /**
+   * Creates the form group to be displayed
+   * @param data
+   */
   createFormGroup(data: IStatus) {
     const group = this._fb.group({
-      power: State[data.power],
-      autosource: State[data.autosource],
+      power: data.power,
+      autosource: data.autosource,
       source: data.source,
-      blank: State[data.blank],
+      blank: data.blank,
       volume: data.volume,
       lamphours: data.lamphours,
       maxlamphours: data.maxlamphours
@@ -55,15 +52,19 @@ export class StatusComponent implements OnInit {
     return group;
   }
 
+  /**
+   * Get up to date value from backend
+   * @param route The route to send the request to
+   */
   refresh(route: string) {
-    this._apiService.get('status/' + route).subscribe((response: any) => {
-      console.log(response);
-      this.statusForm.reset();
-      this.statusForm = this.createFormGroup(response);
-      console.log(this.statusForm);
+    this._apiService.get('status/' + route).subscribe((response: ISingleStatus) => {
+      this.statusForm.patchValue({ [route]: response.value })
     });
   }
 
+  /**
+   * Get up to date values for all properties from backend
+   */
   refreshAll() {
     this._apiService.getStatus().subscribe((response: any) => {
       this.statusForm.reset();
@@ -71,14 +72,22 @@ export class StatusComponent implements OnInit {
     });
   }
 
+  /**
+   * Send toggle command tp backend
+   * @param route The route to send the request to
+   */
   sendToggleCommand(route: string, event: MatSlideToggleChange) {
     let action: string = event.checked ? "on" : "off"
-    this.sendCommand(route + "/" + action);
+    this.sendCommand(route, "/" + action);
   }
 
-  sendCommand(route: string) {
-    this._apiService.get("commands/" + route).subscribe((response: any) => {
-      console.log("response" + response);
+  /**
+   * Send get request to backend
+   * @param route
+   */
+  sendCommand(route: string, subroute: string) {
+    this._apiService.get("commands/" + route + subroute).subscribe((response: ISingleStatus) => {
+      this.statusForm.patchValue({ [route]: response.value });
     })
   }
 }

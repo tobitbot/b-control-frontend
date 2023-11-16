@@ -1,0 +1,10 @@
+{
+  "/api/status": "/status",
+  "/api/status/power": "/power",
+  "/api/status/autosource": "/autosource",
+  "/api/status/source": "/source",
+  "/api/status/blank": "/blank",
+  "/api/status/volume": "/volume",
+  "/api/status/lamphours": "/lamphours",
+  "/api/status/maxlamphours": "/maxlamphours"
+}

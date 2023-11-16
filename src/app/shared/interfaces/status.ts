@@ -12,3 +12,9 @@ export interface IStatus {
     lamphours: number;
     maxlamphours: number
 }
+
+export interface ISingleStatus {
+    result: string;
+    range: string;
+    value: number;
+}
