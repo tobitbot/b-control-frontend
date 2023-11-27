@@ -9,6 +9,7 @@ export interface IStatus {
     source: string;
     blank: State;
     volume: number;
+    brightness: number;
     lamphours: number;
     maxlamphours: number
 }

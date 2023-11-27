@@ -45,6 +45,7 @@ export class StatusComponent implements OnInit {
       source: data.source,
       blank: data.blank,
       volume: data.volume,
+      brightness: data.brightness,
       lamphours: data.lamphours,
       maxlamphours: data.maxlamphours
     })
