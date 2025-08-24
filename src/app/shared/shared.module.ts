@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgFor } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+//import { HttpClientModule } from '@angular/common/http';
 
 
 // Material modules
@@ -18,6 +17,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ReactiveFormsModule } from '@angular/forms';
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [],
@@ -27,7 +27,6 @@ import { ReactiveFormsModule } from '@angular/forms';
   exports: [
     CommonModule,
     FlexLayoutModule,
-    HttpClientModule,
     MatCardModule,
     MatButtonModule,
     MatDividerModule,
@@ -40,6 +39,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatTableModule,
     MatTooltipModule,
     ReactiveFormsModule
-  ]
+  ],
+  providers: [provideHttpClient()]
 })
 export class SharedModule { }
