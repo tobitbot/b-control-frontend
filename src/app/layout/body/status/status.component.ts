@@ -6,13 +6,12 @@ import { ISingleStatus, IStatus } from 'src/app/shared/interfaces/status';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
-  selector: 'app-status',
-  templateUrl: './status.component.html',
-  styleUrls: ['./status.component.scss'],
-  standalone: true,
-  imports: [
-    SharedModule
-  ]
+    selector: 'app-status',
+    templateUrl: './status.component.html',
+    styleUrls: ['./status.component.scss'],
+    imports: [
+        SharedModule
+    ]
 })
 
 

@@ -10,22 +10,21 @@ import { StatusComponent } from './layout/body/status/status.component';
 import { ApiService } from './service/api.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  standalone: true,
-  imports: [
-    SharedModule,
-    CommonModule,
-    AppRoutingModule,
-    BodyComponent,
-    HeaderComponent,
-    MatSidenavModule,
-    StatusComponent
-  ],
-  providers: [
-    ApiService
-  ]
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    imports: [
+        SharedModule,
+        CommonModule,
+        AppRoutingModule,
+        BodyComponent,
+        HeaderComponent,
+        MatSidenavModule,
+        StatusComponent
+    ],
+    providers: [
+        ApiService
+    ]
 })
 
 export class AppComponent implements OnInit {
